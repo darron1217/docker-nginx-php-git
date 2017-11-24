@@ -23,6 +23,8 @@ The following flags are a list of all the currently supported options that can b
  - **DOMAIN** : Set domain name for Lets Encrypt scripts
  - **GIT_HOOK_TOKEN** : Auth-Token used for the [docker-hook](https://github.com/schickling/docker-hook) listener
  - **DOCKER_HOOK_PROXY** : Set to 1 to enable `/docker-hook` as an endpoint on your nginx site
+ - **TIMEZONE** : Set your timezone (e.g. `Asia/Seoul`)
+ - **CRONJOB** : Set your cronjob (e.g. `*/10 * * * * /var/www/html/cron/10min.sh`)
 
 
 ### Dynamically Pulling code from git
@@ -125,4 +127,3 @@ docker logs <CONTAINER_NAME>
 * [eduwass/docker-nginx-php-git](https://github.com/eduwass/docker-nginx-php-git) - Enhanced docker image with docker hook
 * [ngineered/nginx-php-fpm](https://github.com/ngineered/nginx-php-fpm) - Base Docker image and Git push/pull functionalities
 * [schickling/docker-hook](https://github.com/schickling/docker-hook) - Git Webhook listener
-

@@ -84,6 +84,18 @@ if [ ! -z "$PHP_UPLOAD_MAX_FILESIZE" ]; then
  sed -i "s/upload_max_filesize = 100M/upload_max_filesize= ${PHP_UPLOAD_MAX_FILESIZE}M/g" /etc/php7/conf.d/php.ini
 fi
 
+# Set Timezone
+if [ ! -z "$TIMEZONE" ]; then
+ cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
+fi
+
+# Add Cronjob
+if [ ! -z "$CRONJOB" ]; then
+ crontab -l | { cat; echo "${CRONJOB}"; } | crontab -
+ # Start crond
+ crond
+fi
+
 # Always chown webroot for better mounting
 chown -Rf nginx.nginx /var/www/html
 
