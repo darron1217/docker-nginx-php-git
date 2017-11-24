@@ -2,8 +2,8 @@ FROM nginx:mainline-alpine
 
 MAINTAINER ngineered <support@ngineered.co.uk>
 
-ENV php_conf /etc/php7/php.ini
-ENV fpm_conf /etc/php7/php-fpm.d/www.conf
+ENV php_conf /etc/php5/php.ini
+ENV fpm_conf /etc/php5/php-fpm.conf
 
 RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
     sed -i -e "s/v3.4/edge/" /etc/apk/repositories && \
@@ -17,32 +17,30 @@ RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repo
     curl \
     git \
     tzdata \
-    php7-fpm \
-    php7-pdo \
-    php7-pdo_mysql \
-    php7-mysqlnd \
-    php7-mysqli \
-    php7-mcrypt \
-    php7-mbstring \
-    php7-ctype \
-    php7-zlib \
-    php7-gd \
-    php7-exif \
-    php7-intl \
-    php7-sqlite3 \
-    php7-pdo_pgsql \
-    php7-pgsql \
-    php7-xml \
-    php7-xsl \
-    php7-curl \
-    php7-openssl \
-    php7-iconv \
-    php7-json \
-    php7-phar \
-    php7-soap \
-    php7-dom \
-    php7-zip \
-    php7-session \
+    php5-fpm \
+    php5-pdo \
+    php5-pdo_mysql \
+    php5-mysql \
+    php5-mysqli \
+    php5-mcrypt \
+    php5-ctype \
+    php5-zlib \
+    php5-gd \
+    php5-exif \
+    php5-intl \
+    php5-sqlite3 \
+    php5-pdo_pgsql \
+    php5-pgsql \
+    php5-xml \
+    php5-xsl \
+    php5-curl \
+    php5-openssl \
+    php5-iconv \
+    php5-json \
+    php5-phar \
+    php5-soap \
+    php5-dom \
+    php5-zip \
     python \
     python-dev \
     py2-pip \
@@ -102,14 +100,14 @@ RUN sed -i \
         -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g" \
         -e "s/^;clear_env = no$/clear_env = no/" \
         ${fpm_conf} && \
-    ln -s /etc/php7/php.ini /etc/php7/conf.d/php.ini && \
-    find /etc/php7/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
+    ln -s /etc/php5/php.ini /etc/php5/conf.d/php.ini && \
+    find /etc/php5/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # Install/setup Python deps
 RUN pip install requests
 
 # Add PHP symbolic link to be able to use in CLI
-RUN ln -s /usr/bin/php7 /usr/bin/php
+#RUN ln -s /usr/bin/php5 /usr/bin/php
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
