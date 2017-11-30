@@ -88,7 +88,7 @@ fi
 if [ ! -z "$TIMEZONE" ]; then
  cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
  # PHP5 does not support timzezone automatically
- sed -i "s/date.timezone = UTC/date.timezone = ${TIMEZONE}/g" /etc/php5/conf.d/php.ini
+ sed -i "s~date.timezone = UTC~date.timezone = ${TIMEZONE}~g" /etc/php5/conf.d/php.ini
 fi
 
 # Add Cronjob
