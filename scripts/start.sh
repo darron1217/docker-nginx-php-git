@@ -92,8 +92,6 @@ fi
 # Add Cronjob
 if [ ! -z "$CRONJOB" ]; then
  crontab -l | { cat; echo "${CRONJOB}"; } | crontab -
- # Start crond
- crond
 fi
 
 # Always chown webroot for better mounting
