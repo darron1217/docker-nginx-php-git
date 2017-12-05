@@ -6,7 +6,7 @@ ENV php_conf /etc/php7/php.ini
 ENV fpm_conf /etc/php7/php-fpm.d/www.conf
 
 RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-    sed -i -e "s/v3.4/edge/" /etc/apk/repositories && \
+    sed -i -e "s/v3.5/v3.7/" /etc/apk/repositories && \
     echo /etc/apk/respositories && \
     apk update && \
     apk add --no-cache bash \
@@ -33,6 +33,7 @@ RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repo
     php7-pdo_pgsql \
     php7-pgsql \
     php7-xml \
+    php7-xmlwriter \
     php7-xsl \
     php7-curl \
     php7-openssl \
@@ -43,6 +44,8 @@ RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repo
     php7-dom \
     php7-zip \
     php7-session \
+    php7-fileinfo \
+    php7-tokenizer \
     python \
     python-dev \
     py2-pip \
@@ -107,9 +110,6 @@ RUN sed -i \
 
 # Install/setup Python deps
 RUN pip install requests
-
-# Add PHP symbolic link to be able to use in CLI
-RUN ln -s /usr/bin/php7 /usr/bin/php
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
