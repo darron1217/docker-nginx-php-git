@@ -37,7 +37,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         if args.token in self.path:
             logging.info("Start executing '%s'" % args.cmd)
             try:
-                Popen(args.cmd, env=env).wait()
+                Popen(args.cmd, env=env)
                 self.send_response(200, "OK")
                 if 'callback_url' in json_params:
                     # Make a callback to Docker Hub
