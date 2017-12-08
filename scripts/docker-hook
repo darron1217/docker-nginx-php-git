@@ -32,10 +32,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         json_payload = self.rfile.read(header_length)
         env = dict(os.environ)
         json_params = {}
-        if len(json_payload) > 0:
-            json_params = json.loads(json_payload)
-            env.update(('REPOSITORY_' + var.upper(), str(val))
-                       for var, val in json_params['repository'].items())
 
         # Check if the secret URL was called
         if args.token in self.path:
