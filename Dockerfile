@@ -1,4 +1,4 @@
-FROM nginx:mainline-alpine
+FROM nginx:1.13.8-alpine
 
 MAINTAINER ngineered <support@ngineered.co.uk>
 
@@ -55,6 +55,8 @@ RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repo
     dialog \
     gcc \
     musl-dev \
+    nodejs \
+    nodejs-npm \
     linux-headers \
     libffi-dev &&\
     mkdir -p /etc/nginx && \
