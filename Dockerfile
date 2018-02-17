@@ -46,6 +46,7 @@ RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repo
     php7-session \
     php7-fileinfo \
     php7-tokenizer \
+    php7-simplexml \
     python \
     python-dev \
     py2-pip \
