@@ -59,6 +59,7 @@ RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repo
     nodejs \
     nodejs-npm \
     linux-headers \
+    cairo-dev \
     libffi-dev &&\
     mkdir -p /etc/nginx && \
     mkdir -p /var/www/app && \
