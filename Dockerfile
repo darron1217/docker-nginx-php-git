@@ -59,6 +59,8 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     nodejs-npm \
     linux-headers \
     cairo-dev \
+    ttf-droid \
+    ttf-droid-nonlatin \
     chromium@edge \
     libffi-dev &&\
     mkdir -p /etc/nginx && \
