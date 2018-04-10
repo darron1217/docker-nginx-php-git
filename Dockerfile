@@ -59,6 +59,7 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     nodejs-npm \
     linux-headers \
     cairo-dev \
+    chromium@edge \
     libffi-dev &&\
     mkdir -p /etc/nginx && \
     mkdir -p /var/www/app && \
