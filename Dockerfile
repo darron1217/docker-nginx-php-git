@@ -1,13 +1,12 @@
-FROM nginx:1.13.8-alpine
+FROM nginx:1.13.11-alpine
 
 MAINTAINER ngineered <support@ngineered.co.uk>
 
 ENV php_conf /etc/php7/php.ini
 ENV fpm_conf /etc/php7/php-fpm.d/www.conf
 
-RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-    sed -i -e "s/v3.5/v3.7/" /etc/apk/repositories && \
-    echo /etc/apk/respositories && \
+RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     apk update && \
     apk add --no-cache bash \
     openssh-client \
