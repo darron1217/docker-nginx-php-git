@@ -142,6 +142,9 @@ RUN chmod +x /usr/bin/hook-listener
 # copy in code
 ADD src/ /var/www/html/
 
+# Skip downloading Chromium when installing puppeteer. We'll use the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
 EXPOSE 443 80 8555
 
 #CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
