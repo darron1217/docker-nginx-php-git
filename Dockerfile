@@ -62,6 +62,7 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     cairo-dev \
     ttf-droid \
     ttf-droid-nonlatin \
+    imagemagick \
     chromium@edge \
     libffi-dev &&\
     mkdir -p /etc/nginx && \
