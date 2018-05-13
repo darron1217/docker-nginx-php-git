@@ -85,6 +85,10 @@ RUN apk add --no-cache \
       echo root:root | chpasswd && \
       xrdp-keygen xrdp auto
 
+# xrdp config
+ADD conf/root/ /root
+ADD conf/etc/xrdp /etc/xrdp
+
 ADD conf/supervisord.conf /etc/supervisord.conf
 
 # Copy our nginx config
