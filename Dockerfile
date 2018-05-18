@@ -1,6 +1,6 @@
 FROM nginx:1.13.11-alpine
 
-MAINTAINER ngineered <support@ngineered.co.uk>
+MAINTAINER darron1217 <darron1217@gmail.com>
 
 ENV php_conf /etc/php7/php.ini
 ENV fpm_conf /etc/php7/php-fpm.d/www.conf
