@@ -108,7 +108,7 @@ RUN sed -i \
 RUN pip install requests
 
 # Add PHP symbolic link to be able to use in CLI
-#RUN ln -s /usr/bin/php5 /usr/bin/php
+RUN ln -s /usr/bin/php5 /usr/bin/php
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -116,7 +116,7 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 # Install Composer
-RUN cd /tmp && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+RUN cd /tmp && curl -sS --tlsv1 https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # Add Scripts
 ADD scripts/start.sh /start.sh
