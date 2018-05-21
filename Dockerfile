@@ -109,6 +109,7 @@ RUN pip install requests
 
 # Add PHP symbolic link to be able to use in CLI
 RUN ln -s /usr/bin/php5 /usr/bin/php
+RUN ln -s /usr/bin/php-fpm5 /usr/bin/php-fpm
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
