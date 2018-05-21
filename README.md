@@ -25,7 +25,7 @@ The following flags are a list of all the currently supported options that can b
  - **DOCKER_HOOK_PROXY** : Set to 1 to enable `/docker-hook` as an endpoint on your nginx site
  - **TIMEZONE** : Set your timezone (e.g. `Asia/Seoul`)
  - **CRONJOB** : Set your cronjob (e.g. `*/10 * * * * /var/www/html/cron/10min.sh`)
-
+ - **BUILD_SCRIPT** : Set your build script (e.g. `/var/www/html/build.sh`)
 
 ### Dynamically Pulling code from git
 One of the nice features of this container is its ability to pull code from a git repository with a couple of environmental variables passed at run time.
