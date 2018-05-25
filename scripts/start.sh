@@ -97,7 +97,8 @@ if [ ! -z "$CRONJOB" ]; then
 fi
 
 # Always chown webroot for better mounting
-chown -Rf nginx.nginx /var/www/html
+# Sleep for 5 seconds to avoid delay on webserver initialization
+nohup sleep 5 && chown -Rf nginx.nginx /var/www/html > /dev/null 2>&1 &
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisord.conf
