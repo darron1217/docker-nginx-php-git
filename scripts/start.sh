@@ -98,6 +98,8 @@ fi
 
 # Run build script if exists
 if [ ! -z "$BUILD_SCRIPT" ]; then
+    # Go to Webserver dir
+    cd /var/www/html
     # Add execute permission if it is file
     if [ -f "$BUILD_SCRIPT" ]; then
     chmod +x $BUILD_SCRIPT
