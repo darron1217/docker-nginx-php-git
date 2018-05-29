@@ -96,6 +96,15 @@ if [ ! -z "$CRONJOB" ]; then
  crontab -l | { cat; echo "${CRONJOB}"; } | crontab -
 fi
 
+# Run build script if exists
+if [ ! -z "$BUILD_SCRIPT" ]; then
+    # Add execute permission if it is file
+    if [ -f "$BUILD_SCRIPT" ]; then
+    chmod +x $BUILD_SCRIPT
+    fi
+    nohup sleep 3 && $BUILD_SCRIPT > /dev/null 2>&1 &
+fi
+
 # Always chown webroot for better mounting
 # Sleep for 5 seconds to avoid delay on webserver initialization
 nohup sleep 5 && chown -Rf nginx.nginx /var/www/html > /dev/null 2>&1 &
