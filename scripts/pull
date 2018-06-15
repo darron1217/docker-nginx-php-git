@@ -12,7 +12,6 @@ fi
 
 cd /var/www/html
 git pull
-chown -Rf nginx:nginx /var/www/html
 
 # Run build script if exists
 if [ ! -z "$BUILD_SCRIPT" ]; then
