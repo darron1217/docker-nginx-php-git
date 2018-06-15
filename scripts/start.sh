@@ -108,8 +108,7 @@ if [ ! -z "$BUILD_SCRIPT" ]; then
 fi
 
 # Always chown webroot for better mounting
-# Sleep for 5 seconds to avoid delay on webserver initialization
-nohup sleep 5 && chown -Rf nginx.nginx /var/www/html > /dev/null 2>&1 &
+chown -f nginx.nginx /var/www/html
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisord.conf
