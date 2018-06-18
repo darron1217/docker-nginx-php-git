@@ -163,6 +163,9 @@ ADD src/ /var/www/html/
 # Skip downloading Chromium when installing puppeteer. We'll use the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
+# enable nginx user
+RUN sed -i "s#/var/cache/nginx:/sbin/nologin#/var/cache/nginx:/bin/sh#g" /etc/passwd
+
 EXPOSE 443 80 8555 3389
 
 #CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
