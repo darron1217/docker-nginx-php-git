@@ -145,6 +145,9 @@ RUN chmod +x /usr/bin/hook-listener
 # copy in code
 ADD src/ /var/www/html/
 
+# enable nginx user
+RUN sed -i "s#/var/cache/nginx:/sbin/nologin#/var/cache/nginx:/bin/sh#g" /etc/passwd
+
 # Skip downloading Chromium when installing puppeteer. We'll use the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
