@@ -75,6 +75,17 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     mkdir -p /etc/letsencrypt/webrootauth && \
     apk del gcc musl-dev linux-headers libffi-dev augeas-dev python-dev
 
+# Install/setup Python deps
+RUN pip install requests
+
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
+# Install Composer
+RUN cd /tmp && curl -sS --tlsv1 https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+
 ADD conf/supervisord.conf /etc/supervisord.conf
 
 # Copy our nginx config
@@ -117,17 +128,6 @@ RUN sed -i \
     ln -s /etc/php7/php.ini /etc/php7/conf.d/php.ini && \
     find /etc/php7/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
-# Install/setup Python deps
-RUN pip install requests
-
-# Install WP-CLI
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
-
-# Install Composer
-RUN cd /tmp && curl -sS --tlsv1 https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
-
 # Add Scripts
 ADD scripts/start.sh /start.sh
 ADD scripts/pull /usr/bin/pull
@@ -144,9 +144,6 @@ RUN chmod +x /usr/bin/hook-listener
 
 # copy in code
 ADD src/ /var/www/html/
-
-# enable nginx user
-RUN sed -i "s#/var/cache/nginx:/sbin/nologin#/var/cache/nginx:/bin/sh#g" /etc/passwd
 
 # Skip downloading Chromium when installing puppeteer. We'll use the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
