@@ -2,13 +2,13 @@
 
 # Disable Strict Host checking for non interactive git clones
 
-mkdir -p -m 0700 /root/.ssh
-echo -e 'Host *\n\tStrictHostKeyChecking no\n' >> /root/.ssh/config
+su -c "mkdir -p -m 0700 /var/cache/nginx/.ssh" nginx
+su -c "echo -e 'Host *\n\tStrictHostKeyChecking no\n' >> /var/cache/nginx/.ssh/config" nginx
 
 if [ ! -z "$SSH_KEY" ]; then
-  echo $SSH_KEY > /root/.ssh/id_rsa.base64
-  base64 -d /root/.ssh/id_rsa.base64 > /root/.ssh/id_rsa
-  chmod 600 /root/.ssh/id_rsa
+ su -c "echo $SSH_KEY > /var/cache/nginx/.ssh/id_rsa.base64" nginx
+ su -c "base64 -d /var/cache/nginx/.ssh/id_rsa.base64 > /var/cache/nginx/.ssh/id_rsa" nginx
+ su -c "chmod 600 /var/cache/nginx/.ssh/id_rsa" nginx
 fi
 
 # Set custom webroot
@@ -35,9 +35,9 @@ if [ ! -d "/var/www/html/.git" ]; then
    # Remove the test index file
    rm -Rf /var/www/html/index.php
    if [ ! -z "$GIT_BRANCH" ]; then
-     git clone -b $GIT_BRANCH $GIT_REPO /var/www/html
+     su -c "git clone -b $GIT_BRANCH $GIT_REPO /var/www/html" nginx
    else
-     git clone $GIT_REPO /var/www/html
+     su -c "git clone $GIT_REPO /var/www/html" nginx
    fi
  fi
 fi
@@ -104,8 +104,11 @@ if [ ! -z "$BUILD_SCRIPT" ]; then
     if [ -f "$BUILD_SCRIPT" ]; then
     chmod +x $BUILD_SCRIPT
     fi
-    nohup sleep 3 && $BUILD_SCRIPT > /dev/null 2>&1 &
+    nohup sleep 3 && su -c "$BUILD_SCRIPT" nginx > /dev/null 2>&1 &
 fi
+
+# Always chown webroot for better mounting
+chown -f nginx.nginx /var/www/html
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisord.conf
