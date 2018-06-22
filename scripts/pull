@@ -11,7 +11,7 @@ if [ -z "$GIT_NAME" ]; then
 fi
 
 cd /var/www/html
-git pull
+su -c "git pull" nginx
 
 # Run build script if exists
 if [ ! -z "$BUILD_SCRIPT" ]; then
@@ -19,5 +19,5 @@ if [ ! -z "$BUILD_SCRIPT" ]; then
     if [ -f "$BUILD_SCRIPT" ]; then
     chmod +x $BUILD_SCRIPT
     fi
-    $BUILD_SCRIPT
+    su -c "$BUILD_SCRIPT" nginx
 fi
