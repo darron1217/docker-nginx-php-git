@@ -21,11 +21,11 @@ fi
 
 # Setup git variables
 if [ ! -z "$GIT_EMAIL" ]; then
- git config --global user.email "$GIT_EMAIL"
+  su -c "git config --global user.email '$GIT_EMAIL'" nginx
 fi
 if [ ! -z "$GIT_NAME" ]; then
- git config --global user.name "$GIT_NAME"
- git config --global push.default simple
+  su -c "git config --global user.name '$GIT_NAME'" nginx
+  su -c "git config --global push.default simple" nginx
 fi
 
 # Dont pull code down if the .git folder exists
