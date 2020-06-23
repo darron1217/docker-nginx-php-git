@@ -1,4 +1,4 @@
-FROM nginx:1.13.11-alpine
+FROM nginx:1.19-alpine
 
 MAINTAINER darron1217 <darron1217@gmail.com>
 
@@ -33,6 +33,7 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     php7-pgsql \
     php7-xml \
     php7-xmlwriter \
+    php7-xmlreader \
     php7-xsl \
     php7-curl \
     php7-openssl \
@@ -59,7 +60,6 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     nodejs \
     nodejs-npm \
     linux-headers \
-    cairo-dev \
     libffi-dev &&\
     mkdir -p /etc/nginx && \
     mkdir -p /var/www/app && \
