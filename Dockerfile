@@ -47,6 +47,7 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     php7-fileinfo \
     php7-tokenizer \
     php7-simplexml \
+    php7-imagick \
     php7-bcmath \
     python \
     python-dev \
