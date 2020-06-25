@@ -122,6 +122,8 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 # Install Composer
 RUN cd /tmp && curl -sS --tlsv1 https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+RUN mkdir /var/cache/nginx/.composer && \
+    chown nginx /var/cache/nginx/.composer
 
 # Add Scripts
 ADD scripts/start.sh /start.sh

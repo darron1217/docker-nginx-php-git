@@ -107,6 +107,12 @@ if [ ! -z "$BUILD_SCRIPT" ]; then
     nohup sleep 3 && su -c "$BUILD_SCRIPT" nginx > /dev/null 2>&1 &
 fi
 
+# Customize Composer
+if [ ! -z "$COMPOSER_MIRROR" ]; then
+    su -c "composer config -g repos.packagist composer ${COMPOSER_MIRROR}" nginx
+fi
+su -c "composer global require hirak/prestissimo" nginx
+
 # Always chown webroot for better mounting
 chown -f nginx.nginx /var/www/html
 
