@@ -126,6 +126,11 @@ RUN cd /tmp && curl -sS --tlsv1 https://getcomposer.org/installer | php && mv co
 RUN mkdir /var/cache/nginx/.composer && \
     chown nginx /var/cache/nginx/.composer
 
+# For nginx Composer
+USER nginx
+RUN composer global require hirak/prestissimo
+
+USER root
 # Add Scripts
 ADD scripts/start.sh /start.sh
 ADD scripts/pull /usr/bin/pull

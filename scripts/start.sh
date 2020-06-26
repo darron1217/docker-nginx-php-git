@@ -2,7 +2,8 @@
 
 # Disable Strict Host checking for non interactive git clones
 
-su -c "mkdir -p -m 0700 /var/cache/nginx/.ssh" nginx
+mkdir -p -m 0700 /var/cache/nginx/.ssh
+chown nginx.nginx /var/cache/nginx/.ssh
 su -c "echo -e 'Host *\n\tStrictHostKeyChecking no\n' >> /var/cache/nginx/.ssh/config" nginx
 
 if [ ! -z "$SSH_KEY" ]; then
@@ -111,7 +112,6 @@ fi
 if [ ! -z "$COMPOSER_MIRROR" ]; then
     su -c "composer config -g repos.packagist composer ${COMPOSER_MIRROR}" nginx
 fi
-su -c "composer global require hirak/prestissimo" nginx
 
 # Always chown webroot for better mounting
 chown -f nginx.nginx /var/www/html
