@@ -71,22 +71,6 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     mkdir -p /etc/letsencrypt/webrootauth && \
     apk del gcc musl-dev linux-headers libffi-dev augeas-dev python-dev
 
-ADD conf/supervisord.conf /etc/supervisord.conf
-
-# Copy our nginx config
-RUN rm -Rf /etc/nginx/nginx.conf
-ADD conf/nginx.conf /etc/nginx/nginx.conf
-
-# nginx site conf
-RUN mkdir -p /etc/nginx/sites-available/ && \
-mkdir -p /etc/nginx/sites-enabled/ && \
-mkdir -p /etc/nginx/ssl/ && \
-rm -Rf /var/www/* && \
-mkdir /var/www/html/
-ADD conf/nginx-site.conf /etc/nginx/sites-available/default.conf
-ADD conf/nginx-site-ssl.conf /etc/nginx/sites-available/default-ssl.conf
-RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
-
 # enable nginx user
 RUN sed -i "s#/var/cache/nginx:/sbin/nologin#/var/cache/nginx:/bin/sh#g" /etc/passwd
 
@@ -145,6 +129,22 @@ ADD scripts/hook-listener /usr/bin/hook-listener
 RUN chmod 755 /usr/bin/pull && chmod 755 /usr/bin/push && chmod 755 /usr/bin/letsencrypt-setup && chmod 755 /usr/bin/letsencrypt-renew && chmod 755 /start.sh
 RUN chmod +x /usr/bin/docker-hook
 RUN chmod +x /usr/bin/hook-listener
+
+ADD conf/supervisord.conf /etc/supervisord.conf
+
+# Copy our nginx config
+RUN rm -Rf /etc/nginx/nginx.conf
+ADD conf/nginx.conf /etc/nginx/nginx.conf
+
+# nginx site conf
+RUN mkdir -p /etc/nginx/sites-available/ && \
+mkdir -p /etc/nginx/sites-enabled/ && \
+mkdir -p /etc/nginx/ssl/ && \
+rm -Rf /var/www/* && \
+mkdir /var/www/html/
+ADD conf/nginx-site.conf /etc/nginx/sites-available/default.conf
+ADD conf/nginx-site-ssl.conf /etc/nginx/sites-available/default-ssl.conf
+RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 
 # copy in code
 ADD src/ /var/www/html/
