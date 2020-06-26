@@ -105,7 +105,7 @@ if [ ! -z "$BUILD_SCRIPT" ]; then
     if [ -f "$BUILD_SCRIPT" ]; then
     chmod +x $BUILD_SCRIPT
     fi
-    nohup sleep 3 && su -c "$BUILD_SCRIPT" nginx > /dev/null 2>&1 &
+    nohup bash -c 'sleep 3 && su -c "$BUILD_SCRIPT" nginx' >/dev/null 2>&1 &
 fi
 
 # Customize Composer
