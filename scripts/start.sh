@@ -1,15 +1,17 @@
 #!/bin/bash
 
-# Disable Strict Host checking for non interactive git clones
-
-mkdir -p -m 0700 /var/cache/nginx/.ssh
-chown nginx.nginx /var/cache/nginx/.ssh
-su -c "echo -e 'Host *\n\tStrictHostKeyChecking no\n' >> /var/cache/nginx/.ssh/config" nginx
+# Always chown webroot for better mounting
+chown -f nginx.nginx /var/www/html
 
 if [ ! -z "$SSH_KEY" ]; then
- su -c "echo $SSH_KEY > /var/cache/nginx/.ssh/id_rsa.base64" nginx
- su -c "base64 -d /var/cache/nginx/.ssh/id_rsa.base64 > /var/cache/nginx/.ssh/id_rsa" nginx
- su -c "chmod 600 /var/cache/nginx/.ssh/id_rsa" nginx
+  mkdir -p -m 0700 /var/cache/nginx/.ssh
+  chown nginx.nginx -R /var/cache/nginx
+  su -c "echo $SSH_KEY > ~/.ssh/id_rsa.base64" nginx
+  su -c "base64 -d ~/.ssh/id_rsa.base64 > ~/.ssh/id_rsa" nginx
+  su -c "chmod 600 ~/.ssh/id_rsa" nginx
+  # Add git repos to known sites
+  su -c "ssh-keyscan -H github.com >> ~/.ssh/known_hosts" nginx
+  su -c "ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts" nginx
 fi
 
 # Set custom webroot
@@ -112,9 +114,6 @@ fi
 if [ ! -z "$COMPOSER_MIRROR" ]; then
     su -c "composer config -g repos.packagist composer ${COMPOSER_MIRROR}" nginx
 fi
-
-# Always chown webroot for better mounting
-chown -f nginx.nginx /var/www/html
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisord.conf

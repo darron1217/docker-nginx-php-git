@@ -87,6 +87,9 @@ ADD conf/nginx-site.conf /etc/nginx/sites-available/default.conf
 ADD conf/nginx-site-ssl.conf /etc/nginx/sites-available/default-ssl.conf
 RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 
+# enable nginx user
+RUN sed -i "s#/var/cache/nginx:/sbin/nologin#/var/cache/nginx:/bin/sh#g" /etc/passwd
+
 # tweak php-fpm config
 RUN sed -i \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" \
@@ -126,11 +129,9 @@ RUN cd /tmp && curl -sS --tlsv1 https://getcomposer.org/installer | php && mv co
 RUN mkdir /var/cache/nginx/.composer && \
     chown nginx /var/cache/nginx/.composer
 
-# For nginx Composer
-USER nginx
-RUN composer global require hirak/prestissimo
+# For nginx Composer performance
+RUN bash -c 'su -c "composer global require hirak/prestissimo" nginx'
 
-USER root
 # Add Scripts
 ADD scripts/start.sh /start.sh
 ADD scripts/pull /usr/bin/pull
@@ -148,10 +149,6 @@ RUN chmod +x /usr/bin/hook-listener
 # copy in code
 ADD src/ /var/www/html/
 
-# enable nginx user
-RUN sed -i "s#/var/cache/nginx:/sbin/nologin#/var/cache/nginx:/bin/sh#g" /etc/passwd
-
 EXPOSE 443 80 8555
 
-#CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 CMD ["/start.sh"]
